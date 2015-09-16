@@ -32,7 +32,7 @@ article {
   margin: 10px;
 }
 
-h1 {
+h1.fancy {
   position: absolute;
   top: 60%;
   width: 100%;
