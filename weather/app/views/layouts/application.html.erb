@@ -21,6 +21,10 @@
 </head>
 <body>
 
+  <% if session[:user_id] %>
+    <a href="/organizations">Dashboard</a> | 
+    <a href= "/session" data-method='delete'>Log Out</a>
+  <% end %>
 <%= yield %>
 
 </body>
