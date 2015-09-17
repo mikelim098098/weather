@@ -1,0 +1,19 @@
+<%= form_for(@user, url: {action: "create"}) do |f| %>
+  <% if flash[:error]%>
+    <div id="error_explanation">
+      <h2><%= flash[:error] %> </h2>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
