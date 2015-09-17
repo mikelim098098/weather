@@ -1,3 +1,4 @@
+# require 'twilio-ruby'
 class AlertsController < ApplicationController
   before_action :set_alert, only: [:show, :edit, :update, :destroy]
 
@@ -59,6 +60,19 @@ class AlertsController < ApplicationController
       format.html { redirect_to alerts_url, notice: 'Alert was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def self.hello
+    puts "printing message"
+    account_sid = 'AC0624d10f56e7c544e263f5675b73f6b9' 
+    auth_token = '6c837895f487d82c51e283c119bf1b6c' 
+    # set up a client to talk to the Twilio REST API 
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client.account.messages.create({
+      :from => '+18315089098', 
+      :to => '+14088298360', 
+      :body => 'Hello',  
+    })    
   end
 
   private
