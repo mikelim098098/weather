@@ -70,27 +70,31 @@ class AlertsController < ApplicationController
   end
 
   def self.hello
-    puts "printing message"
     url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=London,uk')
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port) {|http|
       http.request(req)
     }
     puts res.body
+    text = "Hi"
 
-    account_sid = 'AC0624d10f56e7c544e263f5675b73f6b9' 
-    auth_token = '6c837895f487d82c51e283c119bf1b6c' 
+    account_sid = 'AC3393f67117467905c5732e2f9300b3f9' 
+    auth_token = 'c63e8daca528dc61e3d870383ca458a7' 
     # set up a client to talk to the Twilio REST API 
     @client = Twilio::REST::Client.new account_sid, auth_token
     
-    alerts = Alert.all
+    curr_time1 =  Time.new.strftime("%I:%M%P")
+    alerts = Alert.where(alert_time: curr_time1)
     alerts.each do | alert |
-       phone = '+1'+alert.user.phone_number
-       # @client.account.messages.create({
-       #  :from => '+18315089098', 
-       #  :to => phone, 
-       #  :body => 'Hello',  
-       # })   
+       puts "message sent"
+       phone = '+1'+alert.user.phone_number 
+       puts phone
+       @client.account.messages.create({
+        :from => '+17606645501', 
+        :to => phone, 
+        :body => text,  
+
+       })   
     end
  
   end
