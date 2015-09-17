@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
   end
   def create
     user = User.find_by(email: user_params[:email])
-    puts 'CHECKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-    puts params.inspect
-    puts user.inspect
+    # puts 'CHECKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+    # puts params.inspect
+    # puts user.inspect
     if user && user.authenticate(user_params[:password])
       session[:id] = user.id
       redirect_to("/users/#{session[:id]}")
