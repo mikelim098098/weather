@@ -32,10 +32,10 @@ body {
    padding:10px;
    padding-bottom:60px;   /* Height of the footer */
 }
-/* #footer { */
-/*    position:absolute; */
-/*    bottom:0; */
-/*    width:100%; */
-/*    height:auto;   /* Height of the footer */ */
-/*    background:#6cf; */
-/* } */
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:auto;   /* Height of the footer */
+   background:#6cf;
+}

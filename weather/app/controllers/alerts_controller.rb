@@ -1,16 +1,19 @@
  # require 'twilio-ruby'
 class AlertsController < ApplicationController
-  before_action :set_alert, only: [:show, :edit, :update, :destroy]
+  before_action :set_alert, only: [:edit, :update, :destroy]
 
   # GET /alerts
   # GET /alerts.json
   def index
     @alerts = Alert.all
+    @user = User.find(session[:id])
+
   end
 
   # GET /alerts/1
   # GET /alerts/1.json
   def show
+    @alert = Alert.find(1)
   end
 
   # GET /alerts/new
@@ -29,7 +32,8 @@ class AlertsController < ApplicationController
 
     respond_to do |format|
       if @alert.save
-        format.html { redirect_to @alert, notice: 'Alert was successfully created.' }
+        # format.html { redirect_to @user, notice: 'Alert was successfully created.' }
+        format.html { redirect_to('/alerts', notice: 'Alert was successfully created.') }
         format.json { render :show, status: :created, location: @alert }
       else
         format.html { render :new }
@@ -89,6 +93,6 @@ class AlertsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def alert_params
-      params.require(:alert).permit(:city_name, :alert_time)
+      params.require(:alert).permit(:city_name, :alert_time, :title)
     end
 end
