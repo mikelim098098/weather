@@ -28,8 +28,9 @@ class AlertsController < ApplicationController
   # POST /alerts
   # POST /alerts.json
   def create
-    @alert = Alert.new(alert_params)
-
+    user = User.find(session[:id])
+    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
+    @alert = Alert.new(alert)
     respond_to do |format|
       if @alert.save
         # format.html { redirect_to @user, notice: 'Alert was successfully created.' }
@@ -45,8 +46,10 @@ class AlertsController < ApplicationController
   # PATCH/PUT /alerts/1
   # PATCH/PUT /alerts/1.json
   def update
+    user = User.find(session[:id])
+    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
     respond_to do |format|
-      if @alert.update(alert_params)
+      if @alert.update(alert)
         format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
         format.json { render :show, status: :ok, location: @alert }
       else
@@ -74,6 +77,11 @@ class AlertsController < ApplicationController
       http.request(req)
     }
     puts res.body
+    alerts = Alert.all
+    alerts.each do | alert |
+       puts alert.city_name
+       puts alert.alert_time
+    end
     # account_sid = 'AC0624d10f56e7c544e263f5675b73f6b9' 
     # auth_token = '6c837895f487d82c51e283c119bf1b6c' 
     # # set up a client to talk to the Twilio REST API 

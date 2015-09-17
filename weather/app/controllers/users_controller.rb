@@ -1,7 +1,5 @@
-require 'net/http'
 class UsersController < ApplicationController
-  before_action :require_login, only: [:show, :edit, :update, :destroy]
-  before_action :require_correct_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -12,7 +10,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(current_user)
   end
 
   # GET /users/new
@@ -22,6 +19,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = User.find(session[:id])
   end
 
   # POST /users

@@ -9,7 +9,7 @@
 #
 
 every 1.day do
-  runner "AlertsController.hello"
+  runner "AlertsController.hello", :environment => 'development'
 end
 
 #
