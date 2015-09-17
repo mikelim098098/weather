@@ -1,7 +1,6 @@
 class Alert < ActiveRecord::Base
 	belongs_to :user
+  
+  validates :title, :city_name, :alert_time, presence: true
 
-	def self.hello
-		puts self.all
-	end
 end
