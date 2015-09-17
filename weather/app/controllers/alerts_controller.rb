@@ -29,6 +29,7 @@ class AlertsController < ApplicationController
   # POST /alerts.json
   def create
     user = User.find(session[:id])
+    
     alert = {:title => alert_params[:title], :city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
     @alert = Alert.new(alert)
     respond_to do |format|
@@ -50,7 +51,7 @@ class AlertsController < ApplicationController
     alert = {:title => alert_params[:title], :city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
     respond_to do |format|
       if @alert.update(alert)
-        format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
+        format.html { redirect_to('/alerts', notice: 'Alert was successfully updated.')}
         format.json { render :show, status: :ok, location: @alert }
       else
         format.html { render :edit }
