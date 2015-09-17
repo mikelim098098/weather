@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   resources :alerts
   resources :users
+  resources :sessions
+  delete 'sessions' => 'sessions#destroy'
   get 'homes' => 'homes#index'
 
-  get 'sessions/new' => 'sessions#new'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
