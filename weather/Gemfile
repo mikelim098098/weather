@@ -58,3 +58,5 @@ gem 'hirb'
 gem 'pg', '~> 0.18.2'
 
 gem 'whenever', :require => false
+
+gem 'twilio-ruby'
