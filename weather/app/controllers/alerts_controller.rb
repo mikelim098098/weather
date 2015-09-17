@@ -13,7 +13,7 @@ class AlertsController < ApplicationController
   # GET /alerts/1
   # GET /alerts/1.json
   def show
-    @alert = Alert.find(1)
+    @alert = Alert.find(params[:id])
   end
 
   # GET /alerts/new
@@ -47,7 +47,7 @@ class AlertsController < ApplicationController
   # PATCH/PUT /alerts/1.json
   def update
     user = User.find(session[:id])
-    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
+    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user, :title => alert_params[:title]  }
     respond_to do |format|
       if @alert.update(alert)
         format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
@@ -77,20 +77,22 @@ class AlertsController < ApplicationController
       http.request(req)
     }
     puts res.body
+
+    account_sid = 'AC0624d10f56e7c544e263f5675b73f6b9' 
+    auth_token = '6c837895f487d82c51e283c119bf1b6c' 
+    # set up a client to talk to the Twilio REST API 
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    
     alerts = Alert.all
     alerts.each do | alert |
-       puts alert.city_name
-       puts alert.alert_time
+       phone = '+1'+alert.user.phone_number
+       # @client.account.messages.create({
+       #  :from => '+18315089098', 
+       #  :to => phone, 
+       #  :body => 'Hello',  
+       # })   
     end
-    # account_sid = 'AC0624d10f56e7c544e263f5675b73f6b9' 
-    # auth_token = '6c837895f487d82c51e283c119bf1b6c' 
-    # # set up a client to talk to the Twilio REST API 
-    # @client = Twilio::REST::Client.new account_sid, auth_token
-    # @client.account.messages.create({
-    #   :from => '+18315089098', 
-    #   :to => '+14088298360', 
-    #   :body => 'Hello',  
-    # })    
+ 
   end
 
   private
