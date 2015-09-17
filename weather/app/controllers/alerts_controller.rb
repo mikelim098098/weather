@@ -5,9 +5,9 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.all
+    # @alerts = Alert.all
     @user = User.find(session[:id])
-
+    @alerts = @user.alerts
   end
 
   # GET /alerts/1
@@ -29,7 +29,7 @@ class AlertsController < ApplicationController
   # POST /alerts.json
   def create
     user = User.find(session[:id])
-    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
+    alert = {:title => alert_params[:title], :city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
     @alert = Alert.new(alert)
     respond_to do |format|
       if @alert.save
@@ -47,7 +47,7 @@ class AlertsController < ApplicationController
   # PATCH/PUT /alerts/1.json
   def update
     user = User.find(session[:id])
-    alert = {:city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user, :title => alert_params[:title]  }
+    alert = {:title => alert_params[:title], :city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
     respond_to do |format|
       if @alert.update(alert)
         format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }

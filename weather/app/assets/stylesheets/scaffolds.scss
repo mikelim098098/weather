@@ -43,8 +43,12 @@ div {
 
 .field_with_errors {
   padding: 2px;
-  background-color: red;
+  background-color: white;
   display: table;
+}
+
+ul {
+  margin-top: 20px;
 }
 
 #error_explanation {
@@ -53,7 +57,7 @@ div {
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
+  background-color:#FF7878;
 
   h2 {
     text-align: left;
@@ -61,13 +65,14 @@ div {
     padding: 5px 5px 5px 15px;
     font-size: 12px;
     margin: -7px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     background-color: #c00;
     color: #fff;
   }
 
   ul li {
     font-size: 12px;
-    list-style: square;
+    list-style: none;
+    color: white
   }
 }
