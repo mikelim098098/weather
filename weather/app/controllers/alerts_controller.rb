@@ -74,33 +74,6 @@ class AlertsController < ApplicationController
 
   def self.hello
 
-      # #current weather
-      # c_url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=seattle&units=imperial')
-      # c_req = Net::HTTP::Get.new(c_url.to_s)
-      # c_res = Net::HTTP.start(c_url.host, c_url.port) {|http|
-      #   http.request(c_req)
-      # }
-
-      # #weather forecast
-      # url = URI.parse('http://api.openweathermap.org/data/2.5/forecast/daily?q=seattle&mode=json&units=imperial&cnt=1')
-      # req = Net::HTTP::Get.new(url.to_s)
-      # res = Net::HTTP.start(url.host, url.port) {|http|
-      #   http.request(req)
-      # }
-      # obj = JSON.parse(res.body)
-      # c_obj = JSON.parse(c_res.body)
-      # # puts obj["list"][0]["temp"]["day"]*(9.to_f/5)+32
-      # # puts "Hello, user! Today, #{res.body.coor}"
-      # text = "Hi user! The weather in " + obj["city"]["name"] + " is currently " + c_obj["main"]["temp"].to_s + " degrees F.\n"  + 
-      #        "Today's forecastis the following:\n" +
-      #       # "hello" + obj["list"]
-      #        "Low: " + obj["list"][0]["temp"]["min"].to_s + " F\n" +
-      #        "High: " + obj["list"][0]["temp"]["max"].to_s + " F\n" +
-      #        "Description: " + obj["list"][0]['weather'][0]['description']
-
-      # puts text
-
-
     account_sid = 'AC3393f67117467905c5732e2f9300b3f9' 
     auth_token = 'c63e8daca528dc61e3d870383ca458a7' 
     # set up a client to talk to the Twilio REST API 
@@ -110,6 +83,8 @@ class AlertsController < ApplicationController
     alerts = Alert.where(alert_time: curr_time1)
 
     alerts.each do | alert |
+
+      user = User.find(alert.user.id)
 
       #current weather
       c_url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=' + alert.city_name + '&units=imperial')
@@ -128,11 +103,11 @@ class AlertsController < ApplicationController
       c_obj = JSON.parse(c_res.body)
       # puts obj["list"][0]["temp"]["day"]*(9.to_f/5)+32
       # puts "Hello, user! Today, #{res.body.coor}"
-      text = "Hi user! The weather in " + obj["city"]["name"] + " is currently " + c_obj["main"]["temp"].to_s + " degrees F.\n"  + 
-             "Today's forecastis the following:\n" +
+      text = "Hi " + user.first_name + "! The weather in " + obj["city"]["name"] + " is currently " + c_obj["main"]["temp"].floor.to_s + " degrees F.\n"  + 
+             "Today's forecast is the following:\n" +
             # "hello" + obj["list"]
-             "Low: " + obj["list"][0]["temp"]["min"].to_s + " F\n" +
-             "High: " + obj["list"][0]["temp"]["max"].to_s + " F\n" +
+             "Low: " + obj["list"][0]["temp"]["min"].floor.to_s + " F\n" +
+             "High: " + obj["list"][0]["temp"]["max"].floor.to_s + " F\n" +
              "Description: " + obj["list"][0]['weather'][0]['description']
 
 

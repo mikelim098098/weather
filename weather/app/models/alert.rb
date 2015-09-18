@@ -5,10 +5,10 @@ class Alert < ActiveRecord::Base
   validate :correct_alert_time
 
   def correct_alert_time
-    hours = ['05', '06', '07', '08', '09']
+    hours = ['05', '06', '07', '08', '09', '10', '11']
     if hours.include?(self.alert_time.strftime("%I"))
     else
-      errors.add(:alert_time, "must be specified between 5am to 10am")
+      errors.add(:alert_time, "must be specified between 5am to 12pm")
     end
   end
 end

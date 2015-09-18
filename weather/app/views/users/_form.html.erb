@@ -12,15 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name %>
   </div>
   <div class="field">
     <%= f.label :email %><br>
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :Phone_Number_ex_1231231234 %><br>
+    <%= f.label :Phone_Number%><br>
+    <p style="font-size:0.8em; color:#9e9e9e">For example: 3334441234</p>
+    <!-- <p>For example: 3334441234</p> -->
     <%= f.text_field :phone_number %>
   </div>
   <div class="field">
