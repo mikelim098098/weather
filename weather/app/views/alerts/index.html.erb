@@ -39,7 +39,7 @@
                         <tr>
                           <td><%= alert.title %></td>
                           <td><%= alert.city_name %></td>
-                          <td><%= alert.alert_time.strftime("%I:%M%P") %></td>
+                          <td><%= alert.alert_time.strftime("%I:%M%P") %> PST</td>
                           <!-- <td><%= link_to 'Show', alert %></td> -->
                           <td><%= link_to 'Edit', edit_alert_path(alert) %></td>
                           <td><%= link_to 'Destroy', alert, method: :delete, data: { confirm: 'Are you sure?' } %></td>

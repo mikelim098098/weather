@@ -31,6 +31,8 @@ class AlertsController < ApplicationController
     user = User.find(session[:id])
     
     alert = {:title => alert_params[:title], :city_name => alert_params[:city_name], :alert_time => alert_params[:alert_time], :user => user }
+    puts 'ALERT TIME!!!!!!!!!!!!!!!!!!!!!!!!'
+    puts alert_params[:alert_time][0]
     @alert = Alert.new(alert)
     respond_to do |format|
       if @alert.save
