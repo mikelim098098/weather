@@ -60,3 +60,5 @@ gem 'pg', '~> 0.18.2'
 gem 'whenever', :require => false
 
 gem 'twilio-ruby'
+
+gem 'rails_12factor', group: :production
