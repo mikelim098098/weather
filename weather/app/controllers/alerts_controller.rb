@@ -73,13 +73,33 @@ class AlertsController < ApplicationController
   end
 
   def self.hello
-    url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=London,uk')
-    req = Net::HTTP::Get.new(url.to_s)
-    res = Net::HTTP.start(url.host, url.port) {|http|
-      http.request(req)
-    }
-    puts res.body
-    text = "Hi"
+
+      # #current weather
+      # c_url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=seattle&units=imperial')
+      # c_req = Net::HTTP::Get.new(c_url.to_s)
+      # c_res = Net::HTTP.start(c_url.host, c_url.port) {|http|
+      #   http.request(c_req)
+      # }
+
+      # #weather forecast
+      # url = URI.parse('http://api.openweathermap.org/data/2.5/forecast/daily?q=seattle&mode=json&units=imperial&cnt=1')
+      # req = Net::HTTP::Get.new(url.to_s)
+      # res = Net::HTTP.start(url.host, url.port) {|http|
+      #   http.request(req)
+      # }
+      # obj = JSON.parse(res.body)
+      # c_obj = JSON.parse(c_res.body)
+      # # puts obj["list"][0]["temp"]["day"]*(9.to_f/5)+32
+      # # puts "Hello, user! Today, #{res.body.coor}"
+      # text = "Hi user! The weather in " + obj["city"]["name"] + " is currently " + c_obj["main"]["temp"].to_s + " degrees F.\n"  + 
+      #        "Today's forecastis the following:\n" +
+      #       # "hello" + obj["list"]
+      #        "Low: " + obj["list"][0]["temp"]["min"].to_s + " F\n" +
+      #        "High: " + obj["list"][0]["temp"]["max"].to_s + " F\n" +
+      #        "Description: " + obj["list"][0]['weather'][0]['description']
+
+      # puts text
+
 
     account_sid = 'AC3393f67117467905c5732e2f9300b3f9' 
     auth_token = 'c63e8daca528dc61e3d870383ca458a7' 
@@ -88,16 +108,43 @@ class AlertsController < ApplicationController
     
     curr_time1 =  Time.new.strftime("%I:%M%P")
     alerts = Alert.where(alert_time: curr_time1)
+
     alerts.each do | alert |
-       puts "message sent"
-       phone = '+1'+alert.user.phone_number 
-       puts phone
-       @client.account.messages.create({
+
+      #current weather
+      c_url = URI.parse('http://api.openweathermap.org/data/2.5/weather?q=' + alert.city_name + '&units=imperial')
+      c_req = Net::HTTP::Get.new(c_url.to_s)
+      c_res = Net::HTTP.start(c_url.host, c_url.port) {|http|
+        http.request(c_req)
+      }
+
+      #weather forecast
+      url = URI.parse('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + alert.city_name + '&mode=json&units=imperial&cnt=1')
+      req = Net::HTTP::Get.new(url.to_s)
+      res = Net::HTTP.start(url.host, url.port) {|http|
+        http.request(req)
+      }
+      obj = JSON.parse(res.body)
+      c_obj = JSON.parse(c_res.body)
+      # puts obj["list"][0]["temp"]["day"]*(9.to_f/5)+32
+      # puts "Hello, user! Today, #{res.body.coor}"
+      text = "Hi user! The weather in " + obj["city"]["name"] + " is currently " + c_obj["main"]["temp"].to_s + " degrees F.\n"  + 
+             "Today's forecastis the following:\n" +
+            # "hello" + obj["list"]
+             "Low: " + obj["list"][0]["temp"]["min"].to_s + " F\n" +
+             "High: " + obj["list"][0]["temp"]["max"].to_s + " F\n" +
+             "Description: " + obj["list"][0]['weather'][0]['description']
+
+
+      puts "message sent"
+      phone = '+1'+alert.user.phone_number 
+      puts phone
+      @client.account.messages.create({
         :from => '+17606645501', 
         :to => phone, 
         :body => text,  
 
-       })   
+        })   
     end
  
   end
